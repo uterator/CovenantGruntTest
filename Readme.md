@@ -16,6 +16,7 @@ This project tests the Covenant's Grunt connection.
 #### Tech stack
 * **Docker** - 3 instances
 * **Java, Maven, Junit 5, Playwright** - UI web
+* Powershell - Executor script
 
 #### Covenant
 
