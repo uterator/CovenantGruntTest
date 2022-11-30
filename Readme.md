@@ -14,9 +14,9 @@ This project tests the Covenant's Grunt connection.
 * **Host** - any OS containing a Docker
 
 #### Tech stack
-* **Docker** - 3 instances
+* **Docker** - to run 3 containers
 * **Java, Maven, Junit 5, Playwright** - UI web
-* **Powershell** - Executor script
+* **Powershell** - the executor script
 
 #### Covenant
 
@@ -49,7 +49,7 @@ Project interactions with the Windows 10 using PowerShell Remote via NTLM authen
 * The project requires from Host machine to have only Docker installed.
 * The Destination Windows 10 OS can be anywhere accessible through the network.
 * Project inputs are configurable, the default file is `./config/config.json`
-* Project inputs can be passed as CLI arguments, which are privileged then from config file parameters.
+* Project inputs can be passed as CLI arguments, which are privileged then parameters from the config file.
 * The user may control which module(s) to run, on which module to stop - through `-Lifecycle` parameter.
 * Many screenshots are collected during Web UI tests run. Reports are in `./report` folder by default.
 * The project is safe to run more than once.
