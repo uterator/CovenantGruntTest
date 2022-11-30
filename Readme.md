@@ -46,7 +46,7 @@ Project interactions with the Windows 10 using PowerShell Remote via NTLM authen
     * the Covenant server's interaction through UI can be replaced by API without braking the flow.
     * Playwright Java can be replaced by any Web page testing tool like Selenium or Cypress.io, ot other languages, without braking the flow.
     * Interaction with the destination OS Windows 10 can be replaced by ssh connection and Expect command, without braking the flow.
-* The project requires to have only Docker installed on the Host machine.
+* The project requires from Host machine to have only Docker installed.
 * The Destination Windows 10 OS can be anywhere accessible through the network.
 * Project inputs are configurable, the default file is `./config/config.json`
 * Project inputs can be passed as CLI arguments, which are privileged then from config file parameters.
