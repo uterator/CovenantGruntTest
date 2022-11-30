@@ -16,7 +16,7 @@ This project tests the Covenant's Grunt connection.
 #### Tech stack
 * **Docker** - 3 instances
 * **Java, Maven, Junit 5, Playwright** - UI web
-* Powershell - Executor script
+* **Powershell** - Executor script
 
 #### Covenant
 
@@ -31,7 +31,7 @@ status after the launcher is stopped on the destination
 
 #### Win 10
 
-Project interactions with the Windows 10 using PowerShell Remote:
+Project interactions with the Windows 10 using PowerShell Remote via NTLN authentication:
 * Connects to the Win 10 using provided credentials
 * Holds the connection
 * Copies the Launcher to the %TPM% directory
@@ -40,22 +40,18 @@ Project interactions with the Windows 10 using PowerShell Remote:
 * Disconnects from the Win 10 
 
 
-#### Main point of the solution
-The main point of the solution is the leveraging PowerShell's NTLM auth connection mechanism for working with the destination Wind 10 machine, copying the launcher on it, starting and stopping the launcher executable.
-
-
 #### About the project
 
 * This project is modular, which means
-    * the Covenant server's interaction through UI can be replaced by API without, braking the flow.
-    * Playwright Java can be replaced by any Web page testing tool like Selenium or Cypress.io and language, braking the flow.
-    * Interaction with the destination OS Windows 10 can be replaced by ssh connection and Expect command, without braking the flow
+    * the Covenant server's interaction through UI can be replaced by API without braking the flow.
+    * Playwright Java can be replaced by any Web page testing tool like Selenium or Cypress.io, ot other languages, without braking the flow.
+    * Interaction with the destination OS Windows 10 can be replaced by ssh connection and Expect command, without braking the flow.
 * The project requires to have only Docker installed on the Host machine.
 * The Destination Windows 10 OS can be anywhere accessible through the network.
 * Project inputs are configurable, the default file is `./config/config.json`
-* Project inputs can be passed as CLI arguments, which are privileged then from config files.
-* The Project is modular and the user may controls which module to run, on which module to stop, or which modules to run - through `-Lifecycle` parameter.
-* Many screenshots are collected during Wbe UI testing. Reports are by default in `./report` folder.
+* Project inputs can be passed as CLI arguments, which are privileged then from config file parameters.
+* The user may control which module(s) to run, on which module to stop - through `-Lifecycle` parameter.
+* Many screenshots are collected during Web UI tests run. Reports are in `./report` folder by default.
 * The project is safe to run more than once.
 
 Please look at Sequential diagram in the end of the Readme.
@@ -73,8 +69,11 @@ docker build --pull --rm -f "./docker/Dockerfile-pwsh" -t covenant-pwsh-java:v1 
 ```powershell
 docker build --pull --rm -f "./docker/Dockerfile-playwright" -t covenant-pw-java:v1 .
 ```
-* Disable "Run-time Protection" on Windows 10
-* Be sure the Powershell Remote is enable on Windows 10 (it is enabled by default)
+* Have a Covenant Servier running.
+* Have a windows running.
+* Disable "Run-time Protection" on Windows 10.
+* Be sure the Powershell Remote is enable on Windows 10 (it is enabled by default).
+* Provide input parameters through the config file or inline.
 
 ---
 
