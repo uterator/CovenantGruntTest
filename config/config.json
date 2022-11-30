@@ -1,0 +1,14 @@
+{
+    "WinHostName": "MSEDGEWIN10",
+    "WinUname": "IEUser",
+    "WinPword": "Passw0rd!",
+    "WinIP": "192.168.0.110",
+    "HostIP": "192.168.0.104",
+    "CovenantHost": "https://192.168.0.104:7443",
+    "CovenantUname": "cobbr",
+    "CovenantPword": "cobbradmin",
+    "ReportFolder": "./report",
+    "ScreenshotsFolder": "./report/screenshots",
+    "LauncherFolder": "./report/launcher",
+    "ListenerFolder": "./report/listener"
+}

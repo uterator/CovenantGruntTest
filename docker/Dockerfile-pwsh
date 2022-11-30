@@ -1,0 +1,14 @@
+FROM quickbreach/powershell-ntlm
+
+#================================================
+# Install docker
+#================================================
+
+RUN curl -sSL https://get.docker.com/ | sh
+
+#================================================
+# Make test folder
+#================================================
+
+RUN mkdir /runner
+WORKDIR /runner

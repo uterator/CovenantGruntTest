@@ -1,0 +1,7 @@
+FROM mcr.microsoft.com/playwright/java:v1.28.0-focal
+
+#================================================
+# Make test folder
+#================================================
+RUN mkdir /tests
+WORKDIR /tests

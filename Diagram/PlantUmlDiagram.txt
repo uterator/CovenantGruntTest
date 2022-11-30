@@ -1,0 +1,138 @@
+@startuml Diagram
+' participant Participant as Foo
+' actor       Actor       as Foo1
+' boundary    Boundary    as Foo2
+' control     Control     as Foo3
+' entity      Entity      as Foo4
+' database    Database    as Foo5
+' collections Collections as Foo6
+' queue       Queue       as Foo7
+
+actor "User on Host" as User
+
+participant Executor [
+	=Executor
+	----
+	Docker container
+	----
+	PowerShell, NTLM Auth
+]
+
+participant UITests [
+	=UITests
+	----
+	Docker container
+	----
+	Java, Maven
+	Junit5, Playwright
+]
+
+participant Server [
+	=Covenant
+	----
+	Docker container
+	----
+	Covenant Server
+]
+
+participant Target [
+	=Win10
+	----
+	Target VM
+]
+
+User -> Executor : Pass test params
+
+
+' ---------------------------------------------
+
+== Initialization ==
+
+Executor [#blue]-> Executor : Prepare empty report folders\n./report\n./report/screenshots
+
+
+' ---------------------------------------------
+
+== Register a Listener and generate a Launcher ==
+
+Executor [#blue]-> UITests : Start mvn test\n"CreateListenerLauncher"
+UITests [#green]-> Server : Create a Listener 
+Server <--[#Grey] Server : Start Listener
+UITests [#green]-> Server : Verify the Listener is running
+UITests [#green]-> Server : Generate Binary Launcher
+UITests <- Server : Download the Launcher
+
+
+' ---------------------------------------------
+
+== Verify a new Launcher has been generated ==
+
+Executor [#blue]-> UITests : Verify the Launcher exists\nin the report folder\n./report/launcher
+
+
+' ---------------------------------------------
+
+== Copy the Launcher to desintation ==
+
+Executor [#blue]-> Target : Connect through Powershell Remote using NTLM Auth (Pwsh 6.1)
+activate Target #LightBlue
+Executor [#blue]-> Target : Upload the Launcher
+
+
+' ---------------------------------------------
+
+== Start Launcher executable on destination ==
+
+Executor [#blue]-> Target : Start the Launcher as a separate process
+Target [#Red]--> Target : Launcher starts
+activate Target #LightPink
+Target [#Red]--> Server : Start communication
+activate Server #Yellow
+Server [#Grey]--> Server : Add a new Grant
+
+
+' ---------------------------------------------
+
+== Verify the Grant has been added and it is Active ==
+
+Executor [#blue]-> UITests : Start mvn test\n"VerifyGruntStartedTest"
+UITests [#green]-> Server : Verify a Grant has been added
+UITests [#green]-> Server : Verify the Grant has "Active" status
+
+
+' UITests [#darkred]-> Server : Got to Grant/Intercept\nSend "WhoAmI" command
+
+' Server --> Target : (C2) Execute "WhoAmI"
+' Server <-- Target : Response
+' Server --> Server : Show response in\nGrunt Intercept
+
+' UITests [#darkred]-> Server : Verify C2 command response
+
+
+' ---------------------------------------------
+
+== Srop the connection ==
+
+Executor [#blue]-> Target : Stop Launcher process
+Target --> Target : Stop Launcher process
+Server ---> Target !! : connection has lost
+Server --> Server : Stop the Grunt
+deactivate Server
+
+
+' ---------------------------------------------
+
+== Verify the Grant connection has been Lost. Stop/Delete the Listener ==
+
+Executor [#blue]-> UITests : Start mvn test\n"VerifyGruntStoppedTest"
+UITests [#green]-> Server : Verify the Grant connaction\nhas "Lost" status
+
+
+' ---------------------------------------------
+
+== Finishing ==
+
+UITests [#green]-> Server : Delete the Listener
+Executor [#blue]-> Target !! : Disconnect 
+User <- Executor : End
+@enduml
