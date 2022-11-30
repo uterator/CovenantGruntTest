@@ -31,7 +31,7 @@ status after the launcher is stopped on the destination
 
 #### Win 10
 
-Project interactions with the Windows 10 using PowerShell Remote via NTLN authentication:
+Project interactions with the Windows 10 using PowerShell Remote via NTLM authentication:
 * Connects to the Win 10 using provided credentials
 * Holds the connection
 * Copies the Launcher to the %TPM% directory
